@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
-
+const port = 7000
+app.listen(port, () => console.log(`Running on ${port}`))
 app.use(express.json())
 
 
@@ -13,7 +14,9 @@ let users = [{
     avatar: 'Placeholder'
 }, {
     id: 2,
-    name: 'Following Name'
+    name: 'Following',
+    last: 'name',
+    city: 'RJ',
 }]
 
 
@@ -22,11 +25,13 @@ app.route('/users').get((req, res) => res.json({
 }))
 
 app.route('/users/:id').get((req, res) => {
+    const idUser = req.params.id
 
-    const user = users.find(user => Number(users.id))
+    const user = users.find(user => Number(user.id) === Number(idUser))
 
-    console.log(res.json(user))
+    if (!user) {
+        res.send('Error 404 not found or user doest exist')
+    }
+
+    res.send(user)
 })
-
-const port = 7000
-app.listen(port, () => console.log(`Running on ${port}`))
