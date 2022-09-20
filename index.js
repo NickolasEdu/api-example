@@ -1,8 +1,10 @@
 const express = require('express')
 const app = express()
+const cors = require('cors')
 const port = 7000
 app.listen(port, () => console.log(`Running on ${port}`))
 app.use(express.json())
+app.use(cors())
 
 
 let users = [{
